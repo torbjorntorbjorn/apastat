@@ -1,0 +1,22 @@
+Apastat, a script that parses Apache mod_status output
+and displays the data on the terminal.
+
+
+Script arguments:
+
+ -a     Show all workers, not only the active ones
+ -s     Sort workers by "seconds since" column
+ -c     Sort workers by client IP
+
+ --scoreboard-key       Show Apache scoreboard key
+
+
+TODO:
+
+ * Implement "*stat" behavior
+   Allow last argument to be an interval, have apastat sample data
+   and show diff between intervals, like "vmstat".
+
+ * Do argument parsing with argparse
+
+ * Take server as an option, default to localhost

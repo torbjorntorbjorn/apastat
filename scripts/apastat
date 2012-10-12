@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+
+import sys
+import apastat
+from signal import signal, SIGPIPE, SIG_DFL
+
+
+if __name__ == "__main__":
+    # Use system default signal handling for handling SIG_PIPE
+    # This means that pipeing apastat output will throw "Broken pipe" exception
+    signal(SIGPIPE, SIG_DFL)
+
+    order_by = ""
+
+    all_workers = False
+    if "-a" in sys.argv:
+        all_workers = True
+
+    if "-s" in sys.argv:
+        order_by = "seconds_since"
+
+    if "-c" in sys.argv:
+        order_by = "client"
+
+    if "--scoreboard-key" in sys.argv:
+        print apastat.scoreboard_key
+
+    else:
+        apastat.run(all_workers=all_workers, order_by=order_by)
