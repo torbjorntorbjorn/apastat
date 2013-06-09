@@ -1,11 +1,9 @@
 import apastat.io
 import apastat.parser
 
-__DEFAULT_URL = "http://localhost/server-status"
 
-
-def run(all_workers=False, order_by=""):
-    document = apastat.io.get_document(__DEFAULT_URL)
+def run(url, all_workers=False, order_by=""):
+    document = apastat.io.get_document(url)
     status = apastat.parser.parse(document)
 
     # Work with all workers, or just the active ones ?

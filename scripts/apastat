@@ -1,8 +1,12 @@
 #!/usr/bin/env python
 
+import re
 import sys
 import apastat
 from signal import signal, SIGPIPE, SIG_DFL
+
+
+__DEFAULT_URL = "http://localhost/server-status"
 
 
 if __name__ == "__main__":
@@ -26,4 +30,16 @@ if __name__ == "__main__":
         print apastat.scoreboard_key
 
     else:
-        apastat.run(all_workers=all_workers, order_by=order_by)
+        # Is there 1 argument that's not prefixed with - ?
+        args = [x for x in sys.argv[1:]  if not x.startswith("-")]
+
+        if len(args) == 1:
+            url = args[0]
+
+            # Try to prefix URL with protocol
+            if not re.match(r"^http(s)?://", url):
+                url = "http://" + url
+        else:
+            url = __DEFAULT_URL
+
+        apastat.run(url, all_workers=all_workers, order_by=order_by)
